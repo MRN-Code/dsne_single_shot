@@ -7,6 +7,7 @@ Created on Thu Oct 19 20:49:26 2017
 """
 
 import numpy as np
+import numpy as Math
 
 
 def Hbeta(D=np.array([]), beta=1.0):
@@ -35,9 +36,11 @@ def x2p(X=np.array([]), tol=1e-5, perplexity=30.0):
     """Performs a binary search to get P-values in such a way that each
     conditional Gaussian has the same perplexity.
 
-    Args:
-
     Returns:
+        P:
+        P is computed based on euclidean distance, perplexity and variance from high dimensional space. Suppose, if point 5 is near of point 1
+        in high dimensional space the P value(P51) would be high. if point 5 is far of point 1
+        in high dimensional space the P value(P51) would be low.
 
     """
 
@@ -145,7 +148,7 @@ def tsne(X=np.array([]),
         print("Error: number of dimensions should be an integer.")
         return -1
 
-    # Initialize variables
+    # Compute PCA on data X
     X = pca(X, initial_dims).real
     (n, d) = X.shape
     max_iter = 1000
@@ -191,6 +194,12 @@ def tsne(X=np.array([]),
         gains[gains < min_gain] = min_gain
         iY = momentum * iY - eta * (gains * dY)
 
+        '''
+        When computation phase is remote, it is going to do operation only on remote data. No local site data presents there.
+        When computation phase is local, it will compute gradient based on combined data(remote+local). But after computing gradient,
+        it will update only local site data.
+        '''
+
         if computation_phase is 'remote':
             Y = Y + iY
             Y = Y - np.tile(np.mean(Y, 0), (n, 1))
@@ -210,7 +219,10 @@ def tsne(X=np.array([]),
         # Stop lying about P-values
         if iter == 100:
             P = P / 4
-
+    '''
+        Return:
+            Y: Y is the two dimensional value of X
+    '''
     # Return solution
     return Y
 

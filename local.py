@@ -12,6 +12,24 @@ from tsneFunctions import normalize_columns, tsne
 
 
 def local_site(args, computation_phase):
+    '''
+
+    args:
+        args(dictionary):  {
+            "shared_X": "Shared_Mnist_X.txt",
+            "shared_Label": "Shared_Label.txt",
+            "no_dims": 2,
+            "initial_dims": 50,
+            "perplexity": 20.0,
+            "shared_Y" : "Y_values.txt";
+        }
+
+        normalize_columns:
+        combined_X(remote + local site data) combinedly is normalized through this function
+
+        Return:
+            localY(It is the two dimensional value of only local site data)
+    '''
 
     shared_X = np.loadtxt(args["shared_X"])
     shared_Y = np.loadtxt(args["shared_Y"])
@@ -24,6 +42,8 @@ def local_site(args, computation_phase):
     parser = argparse.ArgumentParser(
         description='''read in coinstac args for local computation''')
     parser.add_argument('--run', type=json.loads, help='grab coinstac args')
+
+    # load local site data from local memory
     localSite1_Data = ''' {
         "site1_Data": "Site_1_Mnist_X.txt",
         "site1_Label": "Site_1_Label.txt"
@@ -32,7 +52,7 @@ def local_site(args, computation_phase):
     Site1Data = np.loadtxt(site1args.run["site1_Data"])
     (site1Rows, site1Columns) = Site1Data.shape
 
-    # create combinded list by local and remote data
+    # create combinded list by local and remote data. In combined_X remote data will be placed on the top of local site data
     combined_X = np.concatenate((shared_X, Site1Data), axis=0)
     combined_X = normalize_columns(combined_X)
 
@@ -40,6 +60,7 @@ def local_site(args, computation_phase):
     combined_Y = np.random.randn(combined_X.shape[0], no_dims)
     combined_Y[:shared_Y.shape[0], :] = shared_Y
 
+    # local data computation in tsne. Basically here local means Combined data(remote data is placed on the top of local site data). Computation specifications are described in 'tsneFunctions'
     Y_plot = tsne(
         combined_X,
         combined_Y,

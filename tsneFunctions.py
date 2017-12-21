@@ -129,7 +129,21 @@ def tsne(X=np.array([]),
          computation_phase='remote'):
     """Runs t-SNE on the dataset in the NxD array X to reduce its
     dimensionality to no_dims dimensions. The syntaxis of the function is
-    Y = tsne.tsne(X, no_dims, perplexity), where X is an NxD NumPy array."""
+    Y = tsne.tsne(X, no_dims, perplexity), where X is an NxD NumPy array.
+
+    Args:
+        X: High dimensional data
+        Y: low dimensiona shared data
+
+    Note:
+        When computation phase is remote, it is going to do operation only on remote data. No local site data presents there.
+        When computation phase is local, it will compute gradient based on combined data(remote+local). But after computing gradient,
+        it will update only local site data.
+
+    Returns:
+        Y: low dimensional computed value of X
+
+    """
 
     def updateS(Y, G):
         return Y
@@ -194,11 +208,7 @@ def tsne(X=np.array([]),
         gains[gains < min_gain] = min_gain
         iY = momentum * iY - eta * (gains * dY)
 
-        '''
-        When computation phase is remote, it is going to do operation only on remote data. No local site data presents there.
-        When computation phase is local, it will compute gradient based on combined data(remote+local). But after computing gradient,
-        it will update only local site data.
-        '''
+
 
         if computation_phase is 'remote':
             Y = Y + iY
@@ -219,21 +229,27 @@ def tsne(X=np.array([]),
         # Stop lying about P-values
         if iter == 100:
             P = P / 4
-    '''
-        Return:
-            Y: Y is the two dimensional value of X
-    '''
+
     # Return solution
     return Y
 
 
 def normalize_columns(X=Math.array([])):
-	minimum = Math.min(X);
-	X = X - minimum;
-	maximum = Math.max(X)
-	X = X / maximum
-	rows, cols = X.shape
-	for cols in xrange(cols):
-		p = Math.mean((X[:, cols]))
-		X[:, cols] = X[:, cols] - p;
-	return X;
+    '''Take data X and after performing max min normalization it will return the normalized X
+
+    Args:
+        X: high dimensional raw data
+    Returns:
+        X: Normalized X
+
+    '''
+
+    minimum = Math.min(X);
+    X = X - minimum;
+    maximum = Math.max(X)
+    X = X / maximum
+    rows, cols = X.shape
+    for cols in xrange(cols):
+        p = Math.mean((X[:, cols]))
+        X[:, cols] = X[:, cols] - p;
+    return X;

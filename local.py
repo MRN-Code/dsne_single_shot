@@ -12,9 +12,9 @@ from tsneFunctions import normalize_columns, tsne
 
 
 def local_site(args, computation_phase):
-    '''
+    ''' It will load local data and download remote data ana place it on top. Then it will run tsne on combined data(shared + local) and return low dimensional local site data
 
-    args:
+    Args:
         args(dictionary):  {
             "shared_X": "Shared_Mnist_X.txt",
             "shared_Label": "Shared_Label.txt",
@@ -23,12 +23,10 @@ def local_site(args, computation_phase):
             "perplexity": 20.0,
             "shared_Y" : "Y_values.txt";
         }
+        computation_phase : local
 
-        normalize_columns:
-        combined_X(remote + local site data) combinedly is normalized through this function
-
-        Return:
-            localY(It is the two dimensional value of only local site data)
+    Returns:
+        localY: It is the two dimensional value of only local site data
     '''
 
     shared_X = np.loadtxt(args["shared_X"])

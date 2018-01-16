@@ -13,8 +13,8 @@ def local_site(args, computation_phase):
     ''' It will load local data and download remote data and place it on top. Then it will run tsne on combined data(shared + local) and return low dimensional local site data
 
     args (dictionary): {
-        "shared_X" (str): file path to remote site data,
-        "shared_Label" (str): file path to remote site labels
+        "shared_X" (str): remote site data,
+        "shared_Label" (str):  remote site labels
         "no_dims" (int): Final plotting dimensions,
         "initial_dims" (int): number of dimensions that PCA should produce
         "perplexity" (int): initial guess for nearest neighbor

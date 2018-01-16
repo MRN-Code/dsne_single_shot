@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Wed Oct 18 08:59:22 2017
+Created on Mon Jan 152017
 
-@author: dsaha
+@author: Deb
 """
 import numpy as np
 import json
@@ -18,22 +16,17 @@ if __name__ == "__main__":
 
     ''' Call remote and local site and finally collect low dimensional output
     
-     Args(Passing arguments):
-     remote_output:
-        remote_output (dictionary):  {
-        "shared_X": "Shared_Mnist_X.txt",
-        "shared_Label": "Shared_Label.txt",
-        "no_dims": 2,
-        "initial_dims": 50,
-        "perplexity" : 20.0
-        "shared_Y" = "Y_values.txt"
-        } 
-        
-        computation_phase (string): field specifying which part (local/remote) of the 
-        decentralized computation is going to be performed:    
-        
-     Returns:
-        LY: Contains low dimensional Y values of remote and local site together. In the top, remote site Y values and then local site Y is placed              
+     remote_output (dictionary): {
+        "shared_X" (str): file path to remote site data,
+        "shared_Label" (str): file path to remote site labels
+        "no_dims" (int): Final plotting dimensions,
+        "initial_dims" (int): number of dimensions that PCA should produce
+        "perplexity" (int): initial guess for nearest neighbor
+        "shared_Y" (str):  the low-dimensional remote site data
+        }
+                
+     computation_phase (string): field specifying which part (local/remote) of the 
+        decentralized computation is going to be performed.            
 
      '''
 

@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Thu Oct 19 20:48:24 2017
+Created on Mon Jan 152017
 
-@author: gazula
+@author: Deb
 """
 
 import numpy as np
@@ -13,38 +11,32 @@ from tsneFunctions import normalize_columns, tsne
 def remote_site(args, computation_phase):
 
 
-    ''' It will receive parameters from dsne_single_shot. After receiving parameters it will compute tsne on high dimensional remoter data and pass low dimensional values of remote site data
+    ''' It will receive parameters from dsne_single_shot. After receiving parameters it will compute tsne on high dimensional remote data and pass low dimensional values of remote site data
 
-     Args:
-        args (dictionary):  {
-        "shared_X": "Shared_Mnist_X.txt",
-        "shared_Label": "Shared_Label.txt",
-        "no_dims": 2,
-        "initial_dims": 50,
-        "perplexity" : 20.0
+
+    args (dictionary): {
+        "shared_X" (str):  remote site data,
+        "shared_Label" (str):  remote site labels
+        "no_dims" (int): Final plotting dimensions,
+        "initial_dims" (int): number of dimensions that PCA should produce
+        "perplexity" (int): initial guess for nearest neighbor
         }
-        computation_phase (string): remote
+    computation_phase (string): remote
 
         normalize_columns:
         Shared data is normalized through this function
 
-     Returns:
+    Returns:
         Return args will contain previous args value in addition of Y[low dimensional Y values] values of shared_Y.
-        args(dictionary):  {
-            "shared_X": "Shared_Mnist_X.txt",
-            "shared_Label": "Shared_Label.txt",
-            "no_dims": 2,
-            "initial_dims": 50,
-            "perplexity": 20.0,
-            "shared_Y" : "Y_values.txt";
+    args(dictionary):  {
+        "shared_X" (str):  remote site data,
+        "shared_Label" (str):  remote site labels
+        "no_dims" (int): Final plotting dimensions,
+        "initial_dims" (int): number of dimensions that PCA should produce
+        "perplexity" (int): initial guess for nearest neighbor
+        "shared_Y" : the low-dimensional remote site data
         }
     '''
-
-
-
-
-
-
 
 
     shared_X = np.loadtxt(args["shared_X"])

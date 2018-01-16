@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Thu Oct 19 20:49:04 2017
+Created on Mon Jan 152017
 
-@author: gazula
+@author: Deb
 """
 import numpy as np
 import argparse
@@ -12,16 +10,15 @@ from tsneFunctions import normalize_columns, tsne
 
 
 def local_site(args, computation_phase):
-    ''' It will load local data and download remote data ana place it on top. Then it will run tsne on combined data(shared + local) and return low dimensional local site data
+    ''' It will load local data and download remote data and place it on top. Then it will run tsne on combined data(shared + local) and return low dimensional local site data
 
-    Args:
-        args(dictionary):  {
-            "shared_X": "Shared_Mnist_X.txt",
-            "shared_Label": "Shared_Label.txt",
-            "no_dims": 2,
-            "initial_dims": 50,
-            "perplexity": 20.0,
-            "shared_Y" : "Y_values.txt";
+    args (dictionary): {
+        "shared_X" (str): file path to remote site data,
+        "shared_Label" (str): file path to remote site labels
+        "no_dims" (int): Final plotting dimensions,
+        "initial_dims" (int): number of dimensions that PCA should produce
+        "perplexity" (int): initial guess for nearest neighbor
+        "shared_Y" (str):  the low-dimensional remote site data
         }
         computation_phase : local
 
@@ -36,7 +33,7 @@ def local_site(args, computation_phase):
     perplexity = args["perplexity"]
     sharedRows, sharedColumns = shared_X.shape
 
-    # load high dimensional site 1 data
+    # load high dimensional local site data
     parser = argparse.ArgumentParser(
         description='''read in coinstac args for local computation''')
     parser.add_argument('--run', type=json.loads, help='grab coinstac args')
@@ -58,7 +55,7 @@ def local_site(args, computation_phase):
     combined_Y = np.random.randn(combined_X.shape[0], no_dims)
     combined_Y[:shared_Y.shape[0], :] = shared_Y
 
-    # local data computation in tsne. Basically here local means Combined data(remote data is placed on the top of local site data). Computation specifications are described in 'tsneFunctions'
+    # local data computation in tsne. Basically here local indicates Combined data(remote data is placed on the top of local site data). Computation specifications are described in 'tsneFunctions'
     Y_plot = tsne(
         combined_X,
         combined_Y,

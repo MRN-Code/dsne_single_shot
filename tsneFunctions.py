@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Thu Oct 19 20:49:26 2017
+Created on Mon Jan 152017
 
-@author: gazula
+@author: Deb
 """
 
 import numpy as np
@@ -37,8 +35,7 @@ def x2p(X=np.array([]), tol=1e-5, perplexity=30.0):
     conditional Gaussian has the same perplexity.
 
     Returns:
-        P:
-        P is computed based on euclidean distance, perplexity and variance from high dimensional space. Suppose, if point 5 is near of point 1
+        P: P is computed based on euclidean distance, perplexity and variance from high dimensional space. Suppose, if point 5 is near of point 1
         in high dimensional space the P value(P51) would be high. if point 5 is far of point 1
         in high dimensional space the P value(P51) would be low.
 
@@ -100,7 +97,7 @@ def x2p(X=np.array([]), tol=1e-5, perplexity=30.0):
 
 def pca(X=np.array([]), no_dims=50):
     """Runs PCA on the NxD array X in order to reduce its dimensionality to
-    no_dims dimensions.
+    initial_dims dimensions.
 
     Args:
         X (float): training data of size [examples, features]
@@ -127,6 +124,7 @@ def tsne(X=np.array([]),
          initial_dims=50,
          perplexity=30.0,
          computation_phase='remote'):
+
     """Runs t-SNE on the dataset in the NxD array X to reduce its
     dimensionality to no_dims dimensions. The syntaxis of the function is
     Y = tsne.tsne(X, no_dims, perplexity), where X is an NxD NumPy array.
